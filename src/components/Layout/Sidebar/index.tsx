@@ -5,11 +5,16 @@ import { Permission, useUser } from '@app/hooks/useUser';
 import defineMessages from '@app/utils/defineMessages';
 import { Transition } from '@headlessui/react';
 import {
+  ArrowTopRightOnSquareIcon,
   ClockIcon,
   CogIcon,
   ExclamationTriangleIcon,
   EyeSlashIcon,
   FilmIcon,
+  HomeIcon,
+  LifebuoyIcon,
+  PlayCircleIcon,
+  SignalIcon,
   SparklesIcon,
   TvIcon,
   UsersIcon,
@@ -50,6 +55,12 @@ interface SidebarLinkProps {
   requiredPermission?: Permission | Permission[];
   permissionType?: 'and' | 'or';
   dataTestId?: string;
+}
+
+interface CamCoreLinkProps {
+  href: string;
+  label: string;
+  svgIcon: React.ReactNode;
 }
 
 const SidebarLinks: SidebarLinkProps[] = [
@@ -118,6 +129,34 @@ const SidebarLinks: SidebarLinkProps[] = [
   },
 ];
 
+const CamCoreLinks: CamCoreLinkProps[] = [
+  {
+    href: 'https://camcore.au',
+    label: 'CamCore Home',
+    svgIcon: <HomeIcon className="mr-3 h-5 w-5" />,
+  },
+  {
+    href: 'https://camcore.au/help-centre.html',
+    label: 'Help Centre',
+    svgIcon: <LifebuoyIcon className="mr-3 h-5 w-5" />,
+  },
+  {
+    href: 'https://status.camcore.au',
+    label: 'Service Status',
+    svgIcon: <SignalIcon className="mr-3 h-5 w-5" />,
+  },
+  {
+    href: 'https://plex.camcore.au',
+    label: 'Cameron-Media',
+    svgIcon: <PlayCircleIcon className="mr-3 h-5 w-5" />,
+  },
+  {
+    href: 'https://sites.plane.so/intake/forms/2054158f365d49d2a27bfb2c88df72be',
+    label: 'Support Request',
+    svgIcon: <LifebuoyIcon className="mr-3 h-5 w-5" />,
+  },
+];
+
 const Sidebar = ({
   open,
   setClosed,
@@ -162,7 +201,7 @@ const Sidebar = ({
               leaveTo="opacity-0"
             >
               <div className="fixed inset-0">
-                <div className="absolute inset-0 bg-gray-900 opacity-90" />
+                <div className="absolute inset-0 bg-gray-950 opacity-90" />
               </div>
             </Transition.Child>
             <Transition.Child
@@ -175,10 +214,13 @@ const Sidebar = ({
               leaveTo="-translate-x-full"
             >
               <>
-                <div className="sidebar relative flex h-full w-full max-w-xs flex-1 flex-col bg-gray-800">
+                <div
+                  className="sidebar relative flex h-full w-full max-w-xs flex-1 flex-col border-r border-cyan-300/10"
+                  style={{ backgroundColor: '#07162f' }}
+                >
                   <div className="sidebar-close-button absolute right-0 -mr-14 p-1">
                     <button
-                      className="flex h-12 w-12 items-center justify-center rounded-full focus:bg-gray-600 focus:outline-none"
+                      className="flex h-12 w-12 items-center justify-center rounded-full focus:bg-white/10 focus:outline-none"
                       aria-label="Close sidebar"
                       onClick={() => setClosed()}
                     >
@@ -192,48 +234,72 @@ const Sidebar = ({
                     <div className="flex flex-shrink-0 items-center px-2">
                       <span className="w-full px-4 text-xl text-gray-50">
                         <Link href="/" className="relative block h-24 w-64">
-                          <Image src="/logo_full.svg" alt="Logo" fill />
+                          <Image src="/logo_full.svg" alt="CamCore" fill />
                         </Link>
                       </span>
                     </div>
-                    <nav className="mt-10 flex-1 space-y-4 px-4">
-                      {SidebarLinks.filter((link) =>
-                        link.requiredPermission
-                          ? hasPermission(link.requiredPermission, {
-                              type: link.permissionType ?? 'and',
-                            })
-                          : true
-                      ).map((sidebarLink) => {
-                        return (
-                          <Link
-                            key={`mobile-${sidebarLink.messagesKey}`}
-                            href={sidebarLink.href}
-                            as={sidebarLink.as}
-                            onClick={() => setClosed()}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
-                                setClosed();
-                              }
-                            }}
-                            role="button"
-                            tabIndex={0}
-                            className={`flex items-center rounded-md px-2 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out focus:outline-none ${
-                              router.pathname.match(sidebarLink.activeRegExp)
-                                ? 'bg-gradient-to-br from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500'
-                                : 'hover:bg-gray-700 focus:bg-gray-700'
-                            } `}
-                            data-testid={`${sidebarLink.dataTestId}-mobile`}
-                          >
-                            {sidebarLink.svgIcon}
-                            {intl.formatMessage(
-                              menuMessages[sidebarLink.messagesKey]
-                            )}
-                          </Link>
-                        );
-                      })}
+                    <nav className="mt-7 flex-1 px-4">
+                      <div className="space-y-3">
+                        {SidebarLinks.filter((link) =>
+                          link.requiredPermission
+                            ? hasPermission(link.requiredPermission, {
+                                type: link.permissionType ?? 'and',
+                              })
+                            : true
+                        ).map((sidebarLink) => {
+                          return (
+                            <Link
+                              key={`mobile-${sidebarLink.messagesKey}`}
+                              href={sidebarLink.href}
+                              as={sidebarLink.as}
+                              onClick={() => setClosed()}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  setClosed();
+                                }
+                              }}
+                              role="button"
+                              tabIndex={0}
+                              className={`flex items-center rounded-lg px-3 py-2 text-base font-medium leading-6 transition duration-150 ease-in-out focus:outline-none ${
+                                router.pathname.match(sidebarLink.activeRegExp)
+                                  ? 'bg-gradient-to-r from-sky-500 to-cyan-500 text-white shadow-lg shadow-cyan-950/30 hover:from-sky-400 hover:to-cyan-400'
+                                  : 'text-slate-100 hover:bg-white/10 focus:bg-white/10'
+                              } `}
+                              data-testid={`${sidebarLink.dataTestId}-mobile`}
+                            >
+                              {sidebarLink.svgIcon}
+                              {intl.formatMessage(
+                                menuMessages[sidebarLink.messagesKey]
+                              )}
+                            </Link>
+                          );
+                        })}
+                      </div>
+
+                      <div className="mt-7 border-t border-white/10 pt-5">
+                        <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
+                          CamCore
+                        </p>
+                        <div className="space-y-1.5">
+                          {CamCoreLinks.map((camCoreLink) => (
+                            <a
+                              key={`mobile-${camCoreLink.label}`}
+                              href={camCoreLink.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => setClosed()}
+                              className="flex items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition duration-150 ease-in-out hover:bg-white/10 hover:text-white focus:bg-white/10 focus:outline-none"
+                            >
+                              {camCoreLink.svgIcon}
+                              <span>{camCoreLink.label}</span>
+                              <ArrowTopRightOnSquareIcon className="ml-auto h-4 w-4 text-slate-400" />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
                     </nav>
                     {hasPermission(Permission.ADMIN) && (
-                      <div className="px-2">
+                      <div className="px-2 pt-4">
                         <VersionStatus onClick={() => setClosed()} />
                       </div>
                     )}
@@ -249,7 +315,10 @@ const Sidebar = ({
       </div>
 
       <div className="fixed bottom-0 left-0 top-0 z-30 hidden lg:flex lg:flex-shrink-0">
-        <div className="sidebar flex w-64 flex-col">
+        <div
+          className="sidebar flex w-64 flex-col border-r border-cyan-300/10"
+          style={{ backgroundColor: '#07162f' }}
+        >
           <div className="flex h-0 flex-1 flex-col">
             <div className="flex flex-1 flex-col overflow-y-auto pb-4">
               <div className="flex flex-shrink-0 items-center">
@@ -257,73 +326,100 @@ const Sidebar = ({
                   <Link href="/" className="relative block h-24">
                     <Image
                       src="/logo_full.svg"
-                      alt="Logo"
+                      alt="CamCore"
                       fill
                       loading="eager"
                     />
                   </Link>
                 </span>
               </div>
-              <nav className="mt-8 flex-1 space-y-4 px-4">
-                {SidebarLinks.filter((link) =>
-                  link.requiredPermission
-                    ? hasPermission(link.requiredPermission, {
-                        type: link.permissionType ?? 'and',
-                      })
-                    : true
-                ).map((sidebarLink) => {
-                  return (
-                    <Link
-                      key={`desktop-${sidebarLink.messagesKey}`}
-                      href={sidebarLink.href}
-                      as={sidebarLink.as}
-                      className={`group flex items-center rounded-md px-2 py-2 text-lg font-medium leading-6 text-white transition duration-150 ease-in-out focus:outline-none ${
-                        router.pathname.match(sidebarLink.activeRegExp)
-                          ? 'bg-gradient-to-br from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500'
-                          : 'hover:bg-gray-700 focus:bg-gray-700'
-                      } `}
-                      data-testid={sidebarLink.dataTestId}
-                    >
-                      {sidebarLink.svgIcon}
-                      {intl.formatMessage(
-                        menuMessages[sidebarLink.messagesKey]
-                      )}
-                      {sidebarLink.messagesKey === 'requests' &&
-                        pendingRequestsCount > 0 &&
-                        hasPermission(Permission.MANAGE_REQUESTS) && (
-                          <div className="ml-auto flex">
-                            <Badge
-                              className={`rounded-md bg-gradient-to-br ${
-                                router.pathname.match(sidebarLink.activeRegExp)
-                                  ? 'border-indigo-600 from-indigo-700 to-purple-700'
-                                  : 'border-indigo-500 from-indigo-600 to-purple-600'
-                              }`}
-                            >
-                              {pendingRequestsCount}
-                            </Badge>
-                          </div>
+              <nav className="mt-6 flex-1 px-4">
+                <div className="space-y-3">
+                  {SidebarLinks.filter((link) =>
+                    link.requiredPermission
+                      ? hasPermission(link.requiredPermission, {
+                          type: link.permissionType ?? 'and',
+                        })
+                      : true
+                  ).map((sidebarLink) => {
+                    return (
+                      <Link
+                        key={`desktop-${sidebarLink.messagesKey}`}
+                        href={sidebarLink.href}
+                        as={sidebarLink.as}
+                        className={`group flex items-center rounded-lg px-3 py-2 text-lg font-medium leading-6 transition duration-150 ease-in-out focus:outline-none ${
+                          router.pathname.match(sidebarLink.activeRegExp)
+                            ? 'bg-gradient-to-r from-sky-500 to-cyan-500 text-white shadow-lg shadow-cyan-950/30 hover:from-sky-400 hover:to-cyan-400'
+                            : 'text-slate-100 hover:bg-white/10 focus:bg-white/10'
+                        } `}
+                        data-testid={sidebarLink.dataTestId}
+                      >
+                        {sidebarLink.svgIcon}
+                        {intl.formatMessage(
+                          menuMessages[sidebarLink.messagesKey]
                         )}
-                      {sidebarLink.messagesKey === 'issues' &&
-                        openIssuesCount > 0 &&
-                        hasPermission(Permission.MANAGE_ISSUES) && (
-                          <div className="ml-auto flex">
-                            <Badge
-                              className={`rounded-md bg-gradient-to-br ${
-                                router.pathname.match(sidebarLink.activeRegExp)
-                                  ? 'border-indigo-600 from-indigo-700 to-purple-700'
-                                  : 'border-indigo-500 from-indigo-600 to-purple-600'
-                              }`}
-                            >
-                              {openIssuesCount}
-                            </Badge>
-                          </div>
-                        )}
-                    </Link>
-                  );
-                })}
+                        {sidebarLink.messagesKey === 'requests' &&
+                          pendingRequestsCount > 0 &&
+                          hasPermission(Permission.MANAGE_REQUESTS) && (
+                            <div className="ml-auto flex">
+                              <Badge
+                                className={`rounded-md bg-gradient-to-r ${
+                                  router.pathname.match(
+                                    sidebarLink.activeRegExp
+                                  )
+                                    ? 'border-cyan-400 from-sky-600 to-cyan-600'
+                                    : 'border-sky-400 from-sky-500 to-cyan-500'
+                                }`}
+                              >
+                                {pendingRequestsCount}
+                              </Badge>
+                            </div>
+                          )}
+                        {sidebarLink.messagesKey === 'issues' &&
+                          openIssuesCount > 0 &&
+                          hasPermission(Permission.MANAGE_ISSUES) && (
+                            <div className="ml-auto flex">
+                              <Badge
+                                className={`rounded-md bg-gradient-to-r ${
+                                  router.pathname.match(
+                                    sidebarLink.activeRegExp
+                                  )
+                                    ? 'border-cyan-400 from-sky-600 to-cyan-600'
+                                    : 'border-sky-400 from-sky-500 to-cyan-500'
+                                }`}
+                              >
+                                {openIssuesCount}
+                              </Badge>
+                            </div>
+                          )}
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-7 border-t border-white/10 pt-5">
+                  <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
+                    CamCore
+                  </p>
+                  <div className="space-y-1.5">
+                    {CamCoreLinks.map((camCoreLink) => (
+                      <a
+                        key={`desktop-${camCoreLink.label}`}
+                        href={camCoreLink.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition duration-150 ease-in-out hover:bg-white/10 hover:text-white focus:bg-white/10 focus:outline-none"
+                      >
+                        {camCoreLink.svgIcon}
+                        <span>{camCoreLink.label}</span>
+                        <ArrowTopRightOnSquareIcon className="ml-auto h-4 w-4 text-slate-400" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </nav>
               {hasPermission(Permission.ADMIN) && (
-                <div className="px-2">
+                <div className="px-2 pt-4">
                   <VersionStatus />
                 </div>
               )}
