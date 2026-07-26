@@ -1,77 +1,167 @@
 <p align="center">
-<img src="./public/logo_full.svg" alt="Seerr" style="margin: 20px 0;">
+  <img src="./public/logo_full.svg" alt="CamCore Cameron-Media Requests" width="620">
 </p>
+
 <p align="center">
-<img src="https://github.com/seerr-team/seerr/actions/workflows/release.yml/badge.svg" alt="Seerr Release" />
-<img src="https://github.com/seerr-team/seerr/actions/workflows/ci.yml/badge.svg" alt="Seerr CI">
+  CamCore-branded deployment of Seerr for requesting Movies and TV Shows on Cameron-Media.
 </p>
+
 <p align="center">
-<a href="https://discord.gg/seerr"><img src="https://img.shields.io/discord/783137440809746482" alt="Discord"></a>
-<a href="https://hub.docker.com/r/seerr/seerr"><img src="https://img.shields.io/docker/pulls/seerr/seerr" alt="Docker pulls"></a>
-<a href="https://translate.seerr.dev/engage/seerr/"><img src="https://translate.seerr.dev/widget/seerr/svg-badge.svg" alt="Translation status" /></a>
-<a href="https://github.com/seerr-team/seerr/blob/develop/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/seerr-team/seerr"></a>
+  <a href="https://requests.camcore.au"><strong>Open Cameron-Media Requests</strong></a>
+  ·
+  <a href="https://status.camcore.au">CamCore Status</a>
+  ·
+  <a href="https://github.com/seerr-team/seerr">Upstream Seerr</a>
+</p>
 
-**Seerr** is a free and open source software application for managing requests for your media library. It integrates with the media server of your choice: [Jellyfin](https://jellyfin.org), [Plex](https://plex.tv), and [Emby](https://emby.media/). In addition, it integrates with your existing services, such as **[Sonarr](https://sonarr.tv/)**, **[Radarr](https://radarr.video/)**.
+## About this repository
 
-## Current Features
+This repository is the CamCore-maintained fork of [Seerr](https://github.com/seerr-team/seerr). It keeps the upstream media-request functionality while applying CamCore branding and providing a CamCore container image for the existing Cameron-Media Requests service.
 
-- Full Jellyfin/Emby/Plex integration including authentication with user import & management.
-- Support for **PostgreSQL** and **SQLite** databases.
-- Supports Movies, Shows and Mixed Libraries.
-- Ability to change email addresses for SMTP purposes.
-- Easy integration with your existing services. Currently, Seerr supports Sonarr and Radarr. More to come!
-- Jellyfin/Emby/Plex library scan, to keep track of the titles which are already available.
-- Customizable request system, which allows users to request individual seasons or movies in a friendly, easy-to-use interface.
-- Incredibly simple request management UI. Don't dig through the app to simply approve recent requests!
-- Granular permission system.
-- Support for various notification agents.
-- Mobile-friendly design, for when you need to approve requests on the go!
-- Support for watchlisting & blocklisting media.
+The application integrates with Plex, Sonarr and Radarr and retains Seerr's existing request, user, notification and administration features.
 
-With more features on the way! Check out our [issue tracker](/../../issues) to see the features which have already been requested.
+## CamCore container image
 
-## Getting Started
+The `develop` branch automatically builds and publishes:
 
-Check out our documentation for instructions on how to install and run Seerr:
+```text
+ghcr.io/camcoreau/seerr:latest
+```
 
-https://docs.seerr.dev/getting-started/
+The image is built for `linux/amd64` and `linux/arm64`.
 
-## Preview
+## Updating the existing service
 
-<img src="./public/preview.jpg" alt="Seerr application preview" />
+The live service can move to the CamCore image without recreating its configuration.
 
-## Migrating from Overseerr/Jellyseerr to Seerr
+Seerr stores persistent application data under:
 
-Read our [release announcement](https://docs.seerr.dev/blog/seerr-release) to learn what Seerr means for Jellyseerr and Overseerr users.
+```text
+/app/config
+```
 
-Please follow our [migration guide](https://docs.seerr.dev/migration-guide) for detailed instructions on migrating from Overseerr or Jellyseerr.
+Keep the current host folder mapped to `/app/config` and change only the image reference to:
 
-## Support
+```text
+ghcr.io/camcoreau/seerr:latest
+```
 
-- Check out the [Seerr Documentation](https://docs.seerr.dev) before asking for help. Your question might already be in the docs!
-- You can get support on [Discord](https://discord.gg/seerr).
-- You can ask questions in the Help category of our [GitHub Discussions](/../../discussions).
-- Bug reports and feature requests can be submitted via [GitHub Issues](/../../issues).
+This preserves the existing database, users, requests, Plex connection, Sonarr and Radarr settings, notification agents and application preferences.
 
-## API Documentation
+Back up the mapped config folder before updating.
 
-You can access the API documentation from your local Seerr install at http://localhost:5055/api-docs
+See [CamCore Deployment](./docs/camcore-deployment.md) for the complete update, verification and rollback process.
 
-## Community
+## Example Docker Compose service
 
-You can ask questions, share ideas, and more in [GitHub Discussions](/../../discussions).
+```yaml
+services:
+  seerr:
+    image: ghcr.io/camcoreau/seerr:latest
+    init: true
+    container_name: seerr
+    restart: unless-stopped
+    environment:
+      - TZ=Australia/Melbourne
+      - PORT=5055
+    ports:
+      - "5055:5055"
+    volumes:
+      - /path/to/existing/seerr/config:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
+```
 
-If you would like to chat with other members of our growing community, [join the Seerr Discord server](https://discord.gg/seerr)!
+Replace the example host path with the exact config-folder path already used by the current container.
 
-Our [Code of Conduct](./CODE_OF_CONDUCT.md) applies to all Seerr community channels.
+## CamCore branding
 
-## Contributing
+The CamCore customisation includes:
 
-You can help improve Seerr too! Check out our [Contribution Guide](./CONTRIBUTING.md) to get started.
+- CamCore login branding
+- CamCore navigation wordmark
+- CamCore application and browser icon
+- CamCore PWA name, theme and shortcut identity
+- CamCore offline page
+- CamCore container metadata
 
-## Contributors ✨
+The application title stored in the existing Seerr configuration remains configurable and is not reset by the branded image.
 
-[![Contributors](https://opencollective.com/seerr/contributors.svg?width=890)](https://opencollective.com/seerr/#backers)
+## Upstream project
 
-[![Become a Backer](https://opencollective.com/seerr/backers.svg)](https://opencollective.com/seerr/#backers)
-[![Become a Sponsor](https://opencollective.com/seerr/sponsors.svg)](https://opencollective.com/seerr/#sponsors)
+Seerr is a free and open-source media request and discovery manager for Plex, Jellyfin and Emby. It integrates with services including Sonarr and Radarr.
+
+Upstream resources:
+
+- [Seerr source repository](https://github.com/seerr-team/seerr)
+- [Seerr documentation](https://docs.seerr.dev)
+- [Seerr issue tracker](https://github.com/seerr-team/seerr/issues)
+- [Seerr releases](https://github.com/seerr-team/seerr/releases)
+
+CamCore-specific branding and deployment issues should be handled in this repository. General application bugs and feature requests should be checked against the upstream project first.
+
+## Development
+
+Install dependencies:
+
+```sh
+pnpm install
+```
+
+Start the development environment:
+
+```sh
+pnpm dev
+```
+
+Run checks:
+
+```sh
+pnpm typecheck
+pnpm lint
+pnpm test
+```
+
+Build the production application:
+
+```sh
+pnpm build
+```
+
+Build the container locally:
+
+```sh
+docker build -t camcore-seerr:local .
+```
+
+## Keeping the fork current
+
+The CamCore fork should regularly incorporate security fixes and stable changes from `seerr-team/seerr`.
+
+When updating from upstream:
+
+1. Review upstream release notes and migration guidance.
+2. Back up the current live config folder.
+3. Merge or rebase the upstream changes into the CamCore fork.
+4. Resolve branding-file conflicts without removing upstream functionality.
+5. Run type checking, linting, tests and a production build.
+6. Publish the updated CamCore image.
+7. Test the image against a copy of the existing configuration where practical.
+8. Deploy while retaining the existing `/app/config` mapping.
+9. Verify the live service and record major changes in CamCore Operations.
+
+## Credits
+
+The underlying Seerr application is developed and maintained by the [Seerr team](https://github.com/seerr-team) and its open-source contributors.
+
+CamCore branding, deployment workflow and operational documentation are maintained for the **CamCore – Cameron Family Secure Network** environment.
+
+CamCore does not claim ownership of the original Seerr project.
+
+## Licence
+
+This repository remains subject to the upstream [MIT Licence](LICENSE).
