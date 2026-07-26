@@ -99,10 +99,10 @@ const Layout = ({ children }: LayoutProps) => {
         >
           <div className="flex flex-1 items-center justify-between px-4 md:pl-4 md:pr-4">
             <button
-              className={`mr-2 hidden text-white sm:block ${
+              className={`mr-2 block text-white ${
                 isScrolled ? 'opacity-90' : 'opacity-70'
               } transition duration-300 focus:outline-none lg:hidden`}
-              aria-label="Open sidebar"
+              aria-label="Open navigation and CamCore links"
               onClick={() => setSidebarOpen(true)}
               data-testid="sidebar-toggle"
             >
