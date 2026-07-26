@@ -29,6 +29,11 @@ const messages = defineMessages('components.Login', {
   signinwithjellyfin: 'Use your {mediaServerName} account',
   signinwithoverseerr: 'Use your {applicationTitle} account',
   orsigninwith: 'Or sign in with',
+  camcoreservicename: 'Cameron-Media Requests',
+  camcoreintro:
+    'Sign in with your authorised Plex account to request movies and series from Cameron-Media.',
+  needhelp: 'Need help signing in?',
+  openhelpcentre: 'Open the CamCore Help Centre',
 });
 
 const Login = () => {
@@ -162,15 +167,24 @@ const Login = () => {
       <div className="absolute right-4 top-4 z-50">
         <LanguagePicker />
       </div>
-      <div className="relative z-40 mt-10 flex flex-col items-center px-4 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="relative h-48 w-full max-w-full">
-          <Image src="/logo_stacked.svg" alt="Logo" fill />
+      <div className="relative z-40 mt-8 flex flex-col items-center px-4 sm:mx-auto sm:w-full sm:max-w-lg">
+        <div className="relative h-28 w-full max-w-sm sm:h-32">
+          <Image
+            src="/logo_full.svg"
+            alt="CamCore – Cameron Family Secure Network"
+            fill
+            priority
+            className="object-contain mix-blend-screen drop-shadow-[0_10px_32px_rgba(0,0,0,0.65)]"
+          />
         </div>
+        <p className="mt-2 text-center text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200/90">
+          {intl.formatMessage(messages.camcoreservicename)}
+        </p>
       </div>
-      <div className="relative z-50 mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="relative z-50 mt-6 sm:mx-auto sm:w-full sm:max-w-md">
         <div
-          className="bg-gray-800/50 shadow sm:rounded-lg"
-          style={{ backdropFilter: 'blur(5px)' }}
+          className="border border-white/10 bg-gray-900/60 shadow-2xl sm:rounded-2xl"
+          style={{ backdropFilter: 'blur(14px)' }}
         >
           <>
             <Transition
@@ -241,9 +255,14 @@ const Login = () => {
                     <div className="flex-grow border-t border-gray-600" />
                   </div>
                 ) : (
-                  <h2 className="mb-6 text-center text-lg font-bold text-neutral-200">
-                    {intl.formatMessage(messages.signinheader)}
-                  </h2>
+                  <div className="mb-6 text-center">
+                    <h2 className="text-lg font-bold text-neutral-100">
+                      {intl.formatMessage(messages.signinheader)}
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-gray-300">
+                      {intl.formatMessage(messages.camcoreintro)}
+                    </p>
+                  </div>
                 ))}
 
               <div
@@ -253,6 +272,18 @@ const Login = () => {
               >
                 {additionalLoginOptions}
               </div>
+
+              <p className="mt-5 text-center text-xs leading-5 text-gray-400">
+                {intl.formatMessage(messages.needhelp)}{' '}
+                <a
+                  href="https://camcore.au/help-centre.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-medium text-cyan-300 underline decoration-cyan-400/40 underline-offset-4 transition hover:text-cyan-200"
+                >
+                  {intl.formatMessage(messages.openhelpcentre)}
+                </a>
+              </p>
             </div>
           </>
         </div>
