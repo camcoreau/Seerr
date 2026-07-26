@@ -1,69 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#1f2937" />
-
-    <title>You are offline</title>
-
-    <!-- Inline the page's stylesheet. -->
+    <meta name="theme-color" content="#06111f" />
+    <title>CamCore Requests is offline</title>
     <style>
+      * { box-sizing: border-box; }
       body {
-        font-family: helvetica, arial, sans-serif;
-        margin: 2em;
-        background-color: #111827;
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        color: #e5eefb;
+        background:
+          radial-gradient(circle at top left, rgba(14,165,233,.18), transparent 38%),
+          radial-gradient(circle at bottom right, rgba(124,58,237,.16), transparent 42%),
+          #06111f;
       }
-
-      h1 {
-        color: #6366f1;
+      main {
+        width: min(520px, 100%);
+        padding: 36px;
+        border: 1px solid rgba(125,211,252,.22);
+        border-radius: 24px;
+        background: rgba(15, 30, 48, .82);
+        box-shadow: 0 24px 70px rgba(0,0,0,.35);
+        text-align: center;
       }
-
-      p {
-        margin-block: 1rem;
-      }
-
+      img { width: 88px; height: 88px; margin-bottom: 18px; }
+      h1 { margin: 0 0 12px; font-size: 28px; color: #fff; }
+      p { margin: 0 0 24px; color: #a9bad0; line-height: 1.6; }
       button {
-        display: block;
+        border: 0;
+        border-radius: 12px;
+        padding: 12px 20px;
+        font: inherit;
+        font-weight: 700;
+        color: #06111f;
+        background: #7dd3fc;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <h1>You are offline</h1>
-
-    <button type="button">↻ Reload</button>
-
-    <!-- Inline the page's JavaScript file. -->
+    <main>
+      <img src="./camcore-icon.svg" alt="CamCore" />
+      <h1>CamCore Requests is offline</h1>
+      <p>Your device is not currently able to reach Cameron-Media Requests. Check your connection and try again.</p>
+      <button type="button">Reload</button>
+    </main>
     <script>
-      // Manual reload feature.
-      document.querySelector('button').addEventListener('click', () => {
-        window.location.reload();
-      });
-
-      // Listen to changes in the network state, reload when online.
-      // This handles the case when the device is completely offline.
-      window.addEventListener('online', () => {
-        window.location.reload();
-      });
-
-      // Check if the server is responding and reload the page if it is.
-      // This handles the case when the device is online, but the server
-      // is offline or misbehaving.
+      document.querySelector('button').addEventListener('click', () => window.location.reload());
+      window.addEventListener('online', () => window.location.reload());
       async function checkNetworkAndReload() {
         try {
           const response = await fetch('.');
-          // Verify we get a valid response from the server
           if (response.status >= 200 && response.status < 500) {
             window.location.reload();
             return;
           }
-        } catch {
-          // Unable to connect to the server, ignore.
-        }
+        } catch {}
         window.setTimeout(checkNetworkAndReload, 2500);
       }
-
       checkNetworkAndReload();
     </script>
   </body>

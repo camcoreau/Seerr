@@ -1,35 +1,18 @@
 {
-  "name": "Seerr",
-  "short_name": "Seerr",
+  "name": "CamCore Cameron-Media Requests",
+  "short_name": "CamCore Requests",
+  "description": "Request Movies and TV Shows for Cameron-Media.",
   "start_url": "./",
   "icons": [
     {
-      "src": "./android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./android-chrome-192x192_maskable.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./android-chrome-512x512_maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "src": "./camcore-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
-  "theme_color": "#1f2937",
-  "background_color": "#1f2937",
+  "theme_color": "#06111f",
+  "background_color": "#06111f",
   "display": "standalone",
   "shortcuts": [
     {
@@ -37,9 +20,9 @@
       "url": "./",
       "icons": [
         {
-          "src": "./sparkles-icon-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png"
+          "src": "./camcore-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
         }
       ]
     },
@@ -48,9 +31,9 @@
       "url": "./requests",
       "icons": [
         {
-          "src": "./clock-icon-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png"
+          "src": "./camcore-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
         }
       ]
     },
@@ -59,9 +42,9 @@
       "url": "./profile",
       "icons": [
         {
-          "src": "./user-icon-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png"
+          "src": "./camcore-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
         }
       ]
     },
@@ -70,9 +53,9 @@
       "url": "./profile/settings",
       "icons": [
         {
-          "src": "./cog-icon-192x192.png",
-          "sizes": "192x192",
-          "type": "image/png"
+          "src": "./camcore-icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
         }
       ]
     }
