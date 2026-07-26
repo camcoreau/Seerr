@@ -14,8 +14,12 @@ class MyDocument extends Document {
 
   render(): JSX.Element {
     return (
-      <Html>
-        <Head />
+      <Html lang="en-AU">
+        <Head>
+          <link rel="icon" href="/camcore-icon.svg" type="image/svg+xml" />
+          <meta name="application-name" content="CamCore Requests" />
+          <meta name="theme-color" content="#06111f" />
+        </Head>
         <body>
           <Main />
           <NextScript />
