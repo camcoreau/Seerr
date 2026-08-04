@@ -151,7 +151,7 @@ const CamCoreLinks: CamCoreLinkProps[] = [
     svgIcon: <PlayCircleIcon className="mr-3 h-5 w-5" />,
   },
   {
-    href: 'https://support.camcore.au/form/b11526a4-3651-445d-81e9-4c7e597d19cf',
+    href: 'https://camcore.au/support.html',
     label: 'Support Request',
     svgIcon: <LifebuoyIcon className="mr-3 h-5 w-5" />,
   },
