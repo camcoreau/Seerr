@@ -17,7 +17,7 @@ import type { NotificationAgent, NotificationPayload } from './agent';
 import { BaseAgent } from './agent';
 
 const PUBLIC_LOGO_URL =
-  'https://raw.githubusercontent.com/seerr-team/seerr/refs/heads/develop/public/logo_full.svg';
+  'https://raw.githubusercontent.com/camcoreau/Seerr/refs/heads/develop/public/logo_full.png';
 
 const messages = defineMessages('notifications.agents.email', {
   issueType: '{type} issue',
@@ -58,6 +58,80 @@ const messages = defineMessages('notifications.agents.email', {
   issueReopened:
     'The {issueType} for the {mediaType} {subject} was reopened by {userName}.',
 });
+
+const getCamCoreHeading = (type: Notification): string => {
+  switch (type) {
+    case Notification.MEDIA_PENDING:
+      return 'A new request needs review';
+    case Notification.MEDIA_AUTO_REQUESTED:
+      return 'A new request was submitted';
+    case Notification.MEDIA_APPROVED:
+      return 'Your request was approved';
+    case Notification.MEDIA_AUTO_APPROVED:
+      return 'A request was approved automatically';
+    case Notification.MEDIA_AVAILABLE:
+      return 'Your request is now available';
+    case Notification.MEDIA_DECLINED:
+      return 'Your request was declined';
+    case Notification.MEDIA_FAILED:
+      return 'A request could not be added';
+    case Notification.ISSUE_CREATED:
+      return 'A media issue was reported';
+    case Notification.ISSUE_COMMENT:
+      return 'A media issue has a new comment';
+    case Notification.ISSUE_RESOLVED:
+      return 'A media issue was resolved';
+    case Notification.ISSUE_REOPENED:
+      return 'A media issue was reopened';
+    case Notification.TEST_NOTIFICATION:
+      return 'CamCore email notifications are working';
+    default:
+      return 'Cameron-Media Requests notification';
+  }
+};
+
+const getCamCoreEventLabel = (
+  type: Notification,
+  payloadEvent?: string
+): string => {
+  if (payloadEvent?.trim()) {
+    return payloadEvent.trim();
+  }
+
+  switch (type) {
+    case Notification.MEDIA_PENDING:
+      return 'Request pending';
+    case Notification.MEDIA_AUTO_REQUESTED:
+      return 'Request submitted';
+    case Notification.MEDIA_APPROVED:
+    case Notification.MEDIA_AUTO_APPROVED:
+      return 'Request approved';
+    case Notification.MEDIA_AVAILABLE:
+      return 'Request available';
+    case Notification.MEDIA_DECLINED:
+      return 'Request declined';
+    case Notification.MEDIA_FAILED:
+      return 'Request failed';
+    case Notification.ISSUE_CREATED:
+      return 'Issue reported';
+    case Notification.ISSUE_COMMENT:
+      return 'Issue updated';
+    case Notification.ISSUE_RESOLVED:
+      return 'Issue resolved';
+    case Notification.ISSUE_REOPENED:
+      return 'Issue reopened';
+    case Notification.TEST_NOTIFICATION:
+      return 'Test notification';
+    default:
+      return 'Notification';
+  }
+};
+
+const formatNotificationTimestamp = (): string =>
+  new Intl.DateTimeFormat('en-AU', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date());
 
 class EmailAgent
   extends BaseAgent<NotificationAgentEmail>
@@ -103,8 +177,10 @@ class EmailAgent
     const logoUrl = usePublicLogo
       ? PUBLIC_LOGO_URL
       : applicationUrl
-        ? `${applicationUrl}/logo_full.svg`
+        ? `${applicationUrl}/logo_full.png`
         : undefined;
+    const event = getCamCoreEventLabel(type, payload.event);
+    const heading = getCamCoreHeading(type);
 
     if (type === Notification.TEST_NOTIFICATION) {
       return {
@@ -114,6 +190,8 @@ class EmailAgent
         },
         locals: {
           body: payload.message,
+          event,
+          heading,
           applicationUrl,
           applicationTitle,
           logoUrl,
@@ -193,12 +271,13 @@ class EmailAgent
           to: recipientEmail,
         },
         locals: {
-          event: payload.event,
+          event,
+          heading,
           body,
           mediaName: payload.subject,
           mediaExtra: payload.extra ?? [],
           imageUrl: embedPoster ? payload.image : undefined,
-          timestamp: new Date().toTimeString(),
+          timestamp: formatNotificationTimestamp(),
           requestedBy: payload.request.requestedBy.displayName,
           actionUrl: applicationUrl
             ? `${applicationUrl}/${payload.media?.mediaType}/${payload.media?.tmdbId}`
@@ -261,14 +340,15 @@ class EmailAgent
           to: recipientEmail,
         },
         locals: {
-          event: payload.event,
+          event,
+          heading,
           body,
           issueDescription: payload.message,
           issueComment: payload.comment?.message,
           mediaName: payload.subject,
           extra: payload.extra ?? [],
           imageUrl: embedPoster ? payload.image : undefined,
-          timestamp: new Date().toTimeString(),
+          timestamp: formatNotificationTimestamp(),
           actionUrl: applicationUrl
             ? `${applicationUrl}/issues/${payload.issue.id}`
             : undefined,
