@@ -7,6 +7,8 @@ import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { URL } from 'url';
 import { openpgpEncrypt } from './openpgpEncrypt';
 
+const CAMCORE_DEFAULT_SENDER_NAME = 'Requests | CamCore Media';
+
 const getSocket: SMTPTransport.Options['getSocket'] = (options, callback) => {
   if (!options.host || typeof options.port !== 'number') {
     callback(new Error('SMTP host and port are required'), undefined);
@@ -83,9 +85,10 @@ class PreparedEmail extends Email {
     super({
       message: {
         from: {
-          name: settings.options.senderName,
+          name: settings.options.senderName || CAMCORE_DEFAULT_SENDER_NAME,
           address: settings.options.emailFrom,
         },
+        replyTo: settings.options.emailFrom,
       },
       send: true,
       transport: transport,
