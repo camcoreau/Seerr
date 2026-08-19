@@ -15,6 +15,13 @@ mixin camcorePanel(label)
             | #{label}
         block
 
+mixin camcoreGreeting(recipientName, recipientEmail, applicationTitle)
+  - const cleanRecipientName = recipientName ? recipientName.trim() : ''
+  - const isServiceRecipient = /^cameron-media(?:$|\s)/i.test(cleanRecipientName)
+  if cleanRecipientName && cleanRecipientName !== recipientEmail && cleanRecipientName !== applicationTitle && !isServiceRecipient
+    p(style='margin: 18px 0 0; color: #435562; font-size: 15px; line-height: 24px;')
+      | Hi #{cleanRecipientName.replace(/\.|@/g, ((x) => x + '\ufeff'))},
+
 mixin camcoreEmail(serviceLabel, badgeText, headingText)
   doctype html
   html(lang='en-AU')
@@ -42,13 +49,13 @@ mixin camcoreEmail(serviceLabel, badgeText, headingText)
           td(align='center' style='padding: 34px 12px;')
             table.camcore-shell(role='presentation' cellpadding='0' cellspacing='0' border='0' width='640' style='width: 640px; max-width: 640px; margin: 0 auto;')
               tr
-                td.camcore-padding(style='padding: 30px 32px 24px; background-color: #071827; border-radius: 12px 12px 0 0;')
+                td.camcore-padding(style='padding: 22px 32px 18px; background-color: #071827; border-radius: 12px 12px 0 0;')
                   if applicationUrl
                     a(href=applicationUrl style='display: inline-block; text-decoration: none;')
-                      img(src='https://camcore.au/assets/camcore-logo.png' alt='CamCore — Cameron Family Secure Network' width='310' style='display: block; width: 310px; max-width: 100%; height: auto;')
+                      img(src='cid:camcore-email-logo' alt='CamCore — Cameron Family Secure Network' width='310' style='display: block; width: 310px; max-width: 100%; height: auto;')
                   else
-                    img(src='https://camcore.au/assets/camcore-logo.png' alt='CamCore — Cameron Family Secure Network' width='310' style='display: block; width: 310px; max-width: 100%; height: auto;')
-                  div(style='margin-top: 22px; color: #a9bbc6; font-size: 10px; line-height: 15px; font-weight: 750; letter-spacing: 1.8px; text-transform: uppercase;')
+                    img(src='cid:camcore-email-logo' alt='CamCore — Cameron Family Secure Network' width='310' style='display: block; width: 310px; max-width: 100%; height: auto;')
+                  div(style='margin-top: 14px; color: #a9bbc6; font-size: 10px; line-height: 15px; font-weight: 750; letter-spacing: 1.8px; text-transform: uppercase;')
                     | #{serviceLabel}
               tr
                 td(style='height: 4px; line-height: 4px; font-size: 0; background-color: #12c4de;') &nbsp;

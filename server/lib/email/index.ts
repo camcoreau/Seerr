@@ -1,13 +1,32 @@
 import type { NotificationAgentEmail } from '@server/lib/settings';
 import { getSettings } from '@server/lib/settings';
 import Email from 'email-templates';
+import { readFileSync } from 'node:fs';
 import net from 'node:net';
+import path from 'node:path';
 import nodemailer from 'nodemailer';
 import type SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { URL } from 'url';
 import { openpgpEncrypt } from './openpgpEncrypt';
 
 const CAMCORE_DEFAULT_SENDER_NAME = 'Requests | CamCore Media';
+const CAMCORE_EMAIL_LOGO_CID = 'camcore-email-logo';
+
+const CAMCORE_EMAIL_LOGO_BASE64 = (() => {
+  const logoSvg = readFileSync(
+    path.join(process.cwd(), 'public', 'logo_full.svg'),
+    'utf8'
+  );
+  const embeddedPng = logoSvg.match(/data:image\/png;base64,([^"']+)/)?.[1];
+
+  if (!embeddedPng) {
+    throw new Error(
+      'CamCore email logo PNG could not be read from public/logo_full.svg'
+    );
+  }
+
+  return embeddedPng.replace(/\s/g, '');
+})();
 
 const getSocket: SMTPTransport.Options['getSocket'] = (options, callback) => {
   if (!options.host || typeof options.port !== 'number') {
@@ -89,6 +108,15 @@ class PreparedEmail extends Email {
           address: settings.options.emailFrom,
         },
         replyTo: settings.options.emailFrom,
+        attachments: [
+          {
+            filename: 'camcore-logo.png',
+            content: Buffer.from(CAMCORE_EMAIL_LOGO_BASE64, 'base64'),
+            contentType: 'image/png',
+            contentDisposition: 'inline',
+            cid: CAMCORE_EMAIL_LOGO_CID,
+          },
+        ],
       },
       send: true,
       transport: transport,
