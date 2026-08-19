@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - 'agent/**'
     paths-ignore:
       - '**/*.md'
       - 'docs/**'
@@ -60,6 +61,7 @@ jobs:
 
   build-and-publish:
     name: Build and publish AMD64 image
+    if: github.ref == 'refs/heads/develop'
     needs: validate
     runs-on: ubuntu-24.04
     permissions:
