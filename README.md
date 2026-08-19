@@ -1,9 +1,10 @@
 <p align="center">
-  <img src="./public/logo_full.svg" alt="CamCore Cameron-Media Requests" width="620">
+  <img src="./public/logo_full.svg" alt="CamCore — Cameron Family Secure Network" width="620">
 </p>
 
 <p align="center">
-  CamCore-branded deployment of Seerr for requesting Movies and TV Shows on Cameron-Media.
+  <strong>Cameron-Media Requests</strong><br>
+  CamCore-maintained deployment of Seerr for requesting movies and series on Cameron-Media.
 </p>
 
 <p align="center">
@@ -11,28 +12,91 @@
   ·
   <a href="https://status.camcore.au">CamCore Status</a>
   ·
+  <a href="https://camcore.au/help-centre.html">Help Centre</a>
+  ·
   <a href="https://github.com/seerr-team/seerr">Upstream Seerr</a>
 </p>
 
 ## About this repository
 
-This repository is the CamCore-maintained fork of [Seerr](https://github.com/seerr-team/seerr). It keeps the upstream media-request functionality while applying CamCore branding and providing a CamCore container image for the existing Cameron-Media Requests service.
+This repository is the CamCore-maintained fork of [Seerr](https://github.com/seerr-team/seerr). It preserves the upstream media-request platform while applying CamCore visual identity, operational defaults, email communication standards and a CamCore container build for Cameron-Media Requests.
 
-The application integrates with Plex, Sonarr and Radarr and retains Seerr's existing request, user, notification and administration features.
+The application continues to use Seerr's upstream request, discovery, user, notification and administration functionality, including Plex, Sonarr and Radarr integration.
 
-## CamCore container image
+CamCore-specific changes are intentionally kept narrow so upstream fixes can continue to be incorporated with minimal conflict.
 
-The `develop` branch automatically builds and publishes:
+## CamCore service identity
+
+| Surface | CamCore identity |
+| --- | --- |
+| Service | Cameron-Media Requests |
+| Public URL | `https://requests.camcore.au` |
+| Container | `ghcr.io/camcoreau/seerr` |
+| Email sender | `Requests | CamCore Media <help@camcore.au>` |
+| Support | `https://camcore.au/support.html` |
+| Help Centre | `https://camcore.au/help-centre.html` |
+| Service status | `https://status.camcore.au` |
+| Time zone | `Australia/Melbourne` |
+
+## CamCore customisation
+
+The downstream layer includes:
+
+- CamCore sign-in branding;
+- CamCore desktop and mobile navigation;
+- CamCore browser and PWA identity;
+- CamCore offline page;
+- links to CamCore Home, Help Centre, Service Status, Cameron-Media and Support;
+- CamCore-branded request and account emails;
+- CamCore GHCR image metadata and publishing workflow;
+- CamCore deployment, verification and rollback guidance.
+
+The application title stored in the existing Seerr configuration remains configurable and is not reset by the branded image.
+
+## Email communication standard
+
+Seerr email has been brought into the same communication system used by CamCore Operations support mail.
+
+All Cameron-Media Requests email templates use a common shared layout with:
+
+- the dark CamCore brand header;
+- cyan brand divider;
+- `CAMCORE MEDIA • REQUESTS` service labelling;
+- event/status badges;
+- structured light detail panels;
+- cyan primary actions;
+- CamCore Help Centre, Service Status and support contact details;
+- consistent `[CamCore Media] …` subject lines.
+
+Covered messages include request lifecycle updates, media issues, account creation, password reset and test notifications.
+
+The expected sender identity is:
+
+```text
+Requests | CamCore Media <help@camcore.au>
+```
+
+See [CamCore Deployment](./docs/camcore-deployment.md) for the SMTP and validation checklist.
+
+## Container image
+
+Successful CamCore builds publish:
 
 ```text
 ghcr.io/camcoreau/seerr:latest
+ghcr.io/camcoreau/seerr:camcore
+ghcr.io/camcoreau/seerr:develop-<sha>
 ```
 
-The image is built for `linux/amd64` and `linux/arm64`.
+The CamCore production image is built for:
+
+```text
+linux/amd64
+```
+
+`latest` and `camcore` are only published after the CamCore validation job succeeds. The SHA tag provides an immutable version for rollback and troubleshooting.
 
 ## Updating the existing service
-
-The live service can move to the CamCore image without recreating its configuration.
 
 Seerr stores persistent application data under:
 
@@ -40,17 +104,11 @@ Seerr stores persistent application data under:
 /app/config
 ```
 
-Keep the current host folder mapped to `/app/config` and change only the image reference to:
+Keep the existing host folder mapped to `/app/config` when moving to a new CamCore image. This preserves the database, users, requests, Plex connection, Sonarr and Radarr settings, notification agents and application preferences.
 
-```text
-ghcr.io/camcoreau/seerr:latest
-```
+Back up the mapped config folder before an application update.
 
-This preserves the existing database, users, requests, Plex connection, Sonarr and Radarr settings, notification agents and application preferences.
-
-Back up the mapped config folder before updating.
-
-See [CamCore Deployment](./docs/camcore-deployment.md) for the complete update, verification and rollback process.
+See [CamCore Deployment](./docs/camcore-deployment.md) for the full deployment, verification and rollback process.
 
 ## Example Docker Compose service
 
@@ -78,38 +136,12 @@ services:
 
 Replace the example host path with the exact config-folder path already used by the current container.
 
-## CamCore branding
-
-The CamCore customisation includes:
-
-- CamCore login branding
-- CamCore navigation wordmark
-- CamCore application and browser icon
-- CamCore PWA name, theme and shortcut identity
-- CamCore offline page
-- CamCore container metadata
-
-The application title stored in the existing Seerr configuration remains configurable and is not reset by the branded image.
-
-## Upstream project
-
-Seerr is a free and open-source media request and discovery manager for Plex, Jellyfin and Emby. It integrates with services including Sonarr and Radarr.
-
-Upstream resources:
-
-- [Seerr source repository](https://github.com/seerr-team/seerr)
-- [Seerr documentation](https://docs.seerr.dev)
-- [Seerr issue tracker](https://github.com/seerr-team/seerr/issues)
-- [Seerr releases](https://github.com/seerr-team/seerr/releases)
-
-CamCore-specific branding and deployment issues should be handled in this repository. General application bugs and feature requests should be checked against the upstream project first.
-
 ## Development
 
 Install dependencies:
 
 ```sh
-pnpm install
+pnpm install --frozen-lockfile
 ```
 
 Start the development environment:
@@ -118,11 +150,12 @@ Start the development environment:
 pnpm dev
 ```
 
-Run checks:
+Run the CamCore validation checks:
 
 ```sh
-pnpm typecheck
+pnpm format:check
 pnpm lint
+pnpm typecheck
 pnpm test
 ```
 
@@ -144,21 +177,32 @@ The CamCore fork should regularly incorporate security fixes and stable changes 
 
 When updating from upstream:
 
-1. Review upstream release notes and migration guidance.
-2. Back up the current live config folder.
-3. Merge or rebase the upstream changes into the CamCore fork.
-4. Resolve branding-file conflicts without removing upstream functionality.
-5. Run type checking, linting, tests and a production build.
-6. Publish the updated CamCore image.
-7. Test the image against a copy of the existing configuration where practical.
-8. Deploy while retaining the existing `/app/config` mapping.
-9. Verify the live service and record major changes in CamCore Operations.
+1. review upstream release notes and migration guidance;
+2. merge upstream `develop` into the CamCore fork;
+3. resolve branding conflicts without removing upstream functionality;
+4. pay particular attention to the small set of CamCore-modified UI and email files;
+5. allow the CamCore validation workflow to complete;
+6. publish the validated CamCore image;
+7. deploy while retaining the existing `/app/config` mapping;
+8. verify the live service, integrations and email delivery;
+9. record material changes in CamCore Operations.
+
+## Support and upstream issues
+
+CamCore-specific deployment, branding, access and operational matters should use [CamCore Support](https://camcore.au/support.html).
+
+For general Seerr application behaviour, first check the upstream project:
+
+- [Seerr source repository](https://github.com/seerr-team/seerr)
+- [Seerr documentation](https://docs.seerr.dev)
+- [Seerr issue tracker](https://github.com/seerr-team/seerr/issues)
+- [Seerr releases](https://github.com/seerr-team/seerr/releases)
 
 ## Credits
 
 The underlying Seerr application is developed and maintained by the [Seerr team](https://github.com/seerr-team) and its open-source contributors.
 
-CamCore branding, deployment workflow and operational documentation are maintained for the **CamCore – Cameron Family Secure Network** environment.
+CamCore branding, deployment workflow, email communication layer and operational documentation are maintained for the **CamCore — Cameron Family Secure Network** environment.
 
 CamCore does not claim ownership of the original Seerr project.
 
