@@ -1,7 +1,7 @@
 include ../_partials/camcore.pug
 
 +camcoreEmail('CAMCORE MEDIA • REQUESTS', event, heading)
-  if recipientName && recipientName !== recipientEmail
+  if recipientName && recipientName !== recipientEmail && recipientName !== applicationTitle && !/^cameron-media(?:$|\s)/i.test(recipientName.trim())
     p(style='margin: 18px 0 0; color: #435562; font-size: 15px; line-height: 24px;')
       | Hi #{recipientName.replace(/\.|@/g, ((x) => x + '\ufeff'))},
   p(style='margin: 14px 0 0; color: #435562; font-size: 15px; line-height: 24px;')
