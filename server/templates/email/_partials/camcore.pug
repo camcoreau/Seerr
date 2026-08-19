@@ -1,0 +1,84 @@
+mixin camcoreButton(url, label)
+  if url
+    table(role='presentation' cellpadding='0' cellspacing='0' border='0' style='margin: 24px 0 0;')
+      tr
+        td(bgcolor='#11bdd4' style='border-radius: 7px;')
+          a(href=url style='display: inline-block; padding: 13px 20px; color: #05202a; font-size: 15px; line-height: 20px; font-weight: 750; text-decoration: none; border-radius: 7px;')
+            | #{label}
+
+mixin camcorePanel(label)
+  table(role='presentation' cellpadding='0' cellspacing='0' border='0' width='100%' style='margin: 24px 0 0; border-collapse: separate;')
+    tr
+      td(style='padding: 18px 20px; background-color: #f1f6f8; border: 1px solid #d8e4e9; border-radius: 9px; color: #10212b;')
+        if label
+          div(style='margin: 0 0 8px; color: #718391; font-size: 10px; line-height: 14px; font-weight: 750; letter-spacing: 1.4px; text-transform: uppercase;')
+            | #{label}
+        block
+
+mixin camcoreEmail(serviceLabel, badgeText, headingText)
+  doctype html
+  html(lang='en-AU')
+    head
+      meta(charset='utf-8')
+      meta(name='x-apple-disable-message-reformatting')
+      meta(http-equiv='x-ua-compatible' content='ie=edge')
+      meta(name='viewport' content='width=device-width, initial-scale=1')
+      meta(name='format-detection' content='telephone=no, date=no, address=no, email=no')
+      title #{headingText}
+      style.
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+        table { border-collapse: collapse !important; }
+        @media only screen and (max-width: 680px) {
+          .camcore-shell { width: 100% !important; }
+          .camcore-padding { padding-left: 22px !important; padding-right: 22px !important; }
+          .camcore-title { font-size: 27px !important; line-height: 33px !important; }
+          .camcore-poster { width: 88px !important; }
+        }
+    body(style='margin: 0; padding: 0; background-color: #edf3f6; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #10212b;')
+      table(role='presentation' cellpadding='0' cellspacing='0' border='0' width='100%' style='width: 100%; background-color: #edf3f6;')
+        tr
+          td(align='center' style='padding: 34px 12px;')
+            table.camcore-shell(role='presentation' cellpadding='0' cellspacing='0' border='0' width='640' style='width: 640px; max-width: 640px; margin: 0 auto;')
+              tr
+                td.camcore-padding(style='padding: 30px 32px 24px; background-color: #071827; border-radius: 12px 12px 0 0;')
+                  if logoUrl
+                    if applicationUrl
+                      a(href=applicationUrl style='display: inline-block; text-decoration: none;')
+                        img(src=logoUrl alt='CamCore — Cameron Family Secure Network' width='310' style='display: block; width: 310px; max-width: 100%; height: auto;')
+                    else
+                      img(src=logoUrl alt='CamCore — Cameron Family Secure Network' width='310' style='display: block; width: 310px; max-width: 100%; height: auto;')
+                  else
+                    div(style='color: #ffffff; font-size: 34px; line-height: 38px; font-weight: 800; letter-spacing: -1px;')
+                      | Cam
+                      span(style='color: #12c4de;') Core
+                    div(style='margin-top: 2px; color: #a9bac4; font-size: 11px; line-height: 16px;') Cameron Family Secure Network
+                  div(style='margin-top: 22px; color: #a9bbc6; font-size: 10px; line-height: 15px; font-weight: 750; letter-spacing: 1.8px; text-transform: uppercase;')
+                    | #{serviceLabel}
+              tr
+                td(style='height: 4px; line-height: 4px; font-size: 0; background-color: #12c4de;') &nbsp;
+              tr
+                td.camcore-padding(style='padding: 36px 32px 32px; background-color: #ffffff;')
+                  if badgeText
+                    table(role='presentation' cellpadding='0' cellspacing='0' border='0' style='margin: 0 0 16px;')
+                      tr
+                        td(style='padding: 5px 10px; background-color: #eefbfd; border: 1px solid #b8e8ef; border-radius: 999px; color: #0d879b; font-size: 10px; line-height: 13px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;')
+                          | #{badgeText}
+                  h1.camcore-title(style='margin: 0; color: #071827; font-size: 31px; line-height: 38px; font-weight: 800; letter-spacing: -0.55px;')
+                    | #{headingText}
+                  block
+              tr
+                td.camcore-padding(style='padding: 24px 32px 26px; background-color: #f8fafb; border-top: 1px solid #e2eaee; border-radius: 0 0 12px 12px; text-align: center;')
+                  div(style='color: #10212b; font-size: 13px; line-height: 18px; font-weight: 750;') CamCore Media
+                  div(style='margin-top: 2px; color: #718391; font-size: 11px; line-height: 16px;') Cameron Family Secure Network
+                  div(style='margin-top: 12px; color: #0d879b; font-size: 12px; line-height: 19px;')
+                    if applicationUrl
+                      a(href=applicationUrl style='color: #0d879b; font-weight: 650; text-decoration: none;') Cameron-Media Requests
+                      span(style='color: #9aabb5;') &nbsp;&nbsp;•&nbsp;&nbsp;
+                    a(href='https://camcore.au/help-centre.html' style='color: #0d879b; font-weight: 650; text-decoration: none;') Help Centre
+                    span(style='color: #9aabb5;') &nbsp;&nbsp;•&nbsp;&nbsp;
+                    a(href='https://status.camcore.au' style='color: #0d879b; font-weight: 650; text-decoration: none;') Service Status
+                  div(style='margin-top: 4px; font-size: 12px; line-height: 18px;')
+                    a(href='mailto:help@camcore.au' style='color: #0d879b; font-weight: 650; text-decoration: none;') help@camcore.au
+                  div(style='margin-top: 16px; color: #8a9aa5; font-size: 10px; line-height: 15px;') This message relates to Cameron-Media Requests and may contain information intended only for its recipient.
