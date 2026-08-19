@@ -17,7 +17,7 @@ import type { NotificationAgent, NotificationPayload } from './agent';
 import { BaseAgent } from './agent';
 
 const PUBLIC_LOGO_URL =
-  'https://raw.githubusercontent.com/camcoreau/Seerr/refs/heads/develop/public/logo_full.svg';
+  'https://raw.githubusercontent.com/camcoreau/Seerr/refs/heads/develop/public/logo_full.png';
 
 const messages = defineMessages('notifications.agents.email', {
   issueType: '{type} issue',
@@ -177,7 +177,7 @@ class EmailAgent
     const logoUrl = usePublicLogo
       ? PUBLIC_LOGO_URL
       : applicationUrl
-        ? `${applicationUrl}/logo_full.svg`
+        ? `${applicationUrl}/logo_full.png`
         : undefined;
     const event = getCamCoreEventLabel(type, payload.event);
     const heading = getCamCoreHeading(type);
