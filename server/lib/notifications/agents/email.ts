@@ -31,9 +31,9 @@ const messages = defineMessages('notifications.agents.email', {
   autoRequested4k:
     'A new 4K {mediaType} request was submitted automatically and has been added to the request queue.',
   approvedRequest:
-    'Your {mediaType} request has been approved. Cameron-Media will begin preparing it for your library.',
+    'Your {mediaType} request has been approved. Cameron-Media will now begin preparing it for your library.',
   approvedRequest4k:
-    'Your 4K {mediaType} request has been approved. Cameron-Media will begin preparing it for your library.',
+    'Your 4K {mediaType} request has been approved. Cameron-Media will now begin preparing it for your library.',
   autoApproved:
     'A new {mediaType} request was approved automatically and will now be prepared for Cameron-Media.',
   autoApproved4k:
@@ -51,13 +51,13 @@ const messages = defineMessages('notifications.agents.email', {
   failedRequest4k:
     'This 4K {mediaType} request could not be added to {service}. CamCore Operations may need to review the request before it can continue.',
   issueCreated:
-    'A new {issueType} has been reported by {userName} for the {mediaType} {subject}.',
+    'A new {issueType} has been reported by {userName} for {subject}.',
   issueComment:
-    '{userName} added a new comment to the {issueType} for the {mediaType} {subject}.',
+    '{userName} added a new comment to the {issueType} for {subject}.',
   issueResolved:
-    'The {issueType} for the {mediaType} {subject} has been marked as resolved by {userName}.',
+    'The {issueType} for {subject} has been marked as resolved by {userName}.',
   issueReopened:
-    'The {issueType} for the {mediaType} {subject} has been reopened by {userName} and may need further review.',
+    'The {issueType} for {subject} has been reopened by {userName} and may need further review.',
 });
 
 const getCamCoreHeading = (type: Notification): string => {
