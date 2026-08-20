@@ -23,68 +23,69 @@ const messages = defineMessages('notifications.agents.email', {
   issueType: '{type} issue',
   issue: 'issue',
   pendingRequest:
-    'A new request for the following {mediaType} is pending approval:',
+    'A new {mediaType} request has been received and is waiting for review.',
   pendingRequest4k:
-    'A new request for the following {mediaType} in 4K is pending approval:',
+    'A new 4K {mediaType} request has been received and is waiting for review.',
   autoRequested:
-    'A new request for the following {mediaType} was automatically submitted:',
+    'A new {mediaType} request was submitted automatically and has been added to the request queue.',
   autoRequested4k:
-    'A new request for the following {mediaType} in 4K was automatically submitted:',
+    'A new 4K {mediaType} request was submitted automatically and has been added to the request queue.',
   approvedRequest:
-    'Your request for the following {mediaType} has been approved:',
+    'Your {mediaType} request has been approved. Cameron-Media will begin preparing it for your library.',
   approvedRequest4k:
-    'Your request for the following {mediaType} in 4K has been approved:',
+    'Your 4K {mediaType} request has been approved. Cameron-Media will begin preparing it for your library.',
   autoApproved:
-    'A new request for the following {mediaType} has been automatically approved:',
+    'A new {mediaType} request was approved automatically and will now be prepared for Cameron-Media.',
   autoApproved4k:
-    'A new request for the following {mediaType} in 4K has been automatically approved:',
+    'A new 4K {mediaType} request was approved automatically and will now be prepared for Cameron-Media.',
   availableRequest:
-    'Your request for the following {mediaType} is now available:',
+    'Your requested {mediaType} is now available to watch on Cameron-Media.',
   availableRequest4k:
-    'Your request for the following {mediaType} in 4K is now available:',
-  declinedRequest: 'Your request for the following {mediaType} was declined:',
+    'Your requested 4K {mediaType} is now available to watch on Cameron-Media.',
+  declinedRequest:
+    'Your {mediaType} request was not approved. Open the request to review its current status or contact CamCore Support if you need assistance.',
   declinedRequest4k:
-    'Your request for the following {mediaType} in 4K was declined:',
+    'Your 4K {mediaType} request was not approved. Open the request to review its current status or contact CamCore Support if you need assistance.',
   failedRequest:
-    'A request for the following {mediaType} failed to be added to {service}:',
+    'This {mediaType} request could not be added to {service}. CamCore Operations may need to review the request before it can continue.',
   failedRequest4k:
-    'A request for the following {mediaType} in 4K failed to be added to {service}:',
+    'This 4K {mediaType} request could not be added to {service}. CamCore Operations may need to review the request before it can continue.',
   issueCreated:
-    'A new {issueType} has been reported by {userName} for the {mediaType} {subject}:',
+    'A new {issueType} has been reported by {userName} for the {mediaType} {subject}.',
   issueComment:
-    '{userName} commented on the {issueType} for the {mediaType} {subject}:',
+    '{userName} added a new comment to the {issueType} for the {mediaType} {subject}.',
   issueResolved:
-    'The {issueType} for the {mediaType} {subject} was marked as resolved by {userName}!',
+    'The {issueType} for the {mediaType} {subject} has been marked as resolved by {userName}.',
   issueReopened:
-    'The {issueType} for the {mediaType} {subject} was reopened by {userName}.',
+    'The {issueType} for the {mediaType} {subject} has been reopened by {userName} and may need further review.',
 });
 
 const getCamCoreHeading = (type: Notification): string => {
   switch (type) {
     case Notification.MEDIA_PENDING:
-      return 'A new request needs review';
+      return 'A new request is waiting for review';
     case Notification.MEDIA_AUTO_REQUESTED:
-      return 'A new request was submitted';
+      return 'A new request has been submitted';
     case Notification.MEDIA_APPROVED:
-      return 'Your request was approved';
+      return 'Your request has been approved';
     case Notification.MEDIA_AUTO_APPROVED:
       return 'A request was approved automatically';
     case Notification.MEDIA_AVAILABLE:
-      return 'Your request is now available';
+      return 'Your request is ready to watch';
     case Notification.MEDIA_DECLINED:
-      return 'Your request was declined';
+      return 'Your request was not approved';
     case Notification.MEDIA_FAILED:
-      return 'A request could not be added';
+      return 'A request needs attention';
     case Notification.ISSUE_CREATED:
-      return 'A media issue was reported';
+      return 'A media issue has been reported';
     case Notification.ISSUE_COMMENT:
-      return 'A media issue has a new comment';
+      return 'A media issue has a new update';
     case Notification.ISSUE_RESOLVED:
-      return 'A media issue was resolved';
+      return 'A media issue has been resolved';
     case Notification.ISSUE_REOPENED:
-      return 'A media issue was reopened';
+      return 'A media issue has been reopened';
     case Notification.TEST_NOTIFICATION:
-      return 'CamCore email notifications are working';
+      return 'Cameron-Media Requests email is working';
     default:
       return 'Cameron-Media Requests notification';
   }
@@ -189,7 +190,6 @@ class EmailAgent
           to: recipientEmail,
         },
         locals: {
-          body: payload.message,
           event,
           heading,
           applicationUrl,
