@@ -112,6 +112,8 @@ Cameron-Media Requests uses the CamCore application sender standard:
 | Encryption | None on the private CamCore LAN |
 | Use | Request confirmations and status updates |
 
+The application/service name remains **Cameron-Media Requests**. `CamCore Media` is used as the sender and brand family, not as a replacement application name.
+
 The CamCore fork also provides branded HTML templates for:
 
 - request pending, approved, available, declined and failed notifications;
@@ -127,7 +129,7 @@ After changing email settings, send a test notification and confirm:
 
 - the sender is `Requests | CamCore Media <help@camcore.au>`;
 - the CamCore logo loads;
-- the subject starts with `[CamCore Media]`;
+- the test subject is `Test notification — Cameron-Media Requests` with no `[CamCore Media]` prefix;
 - the email displays correctly in Outlook desktop and Outlook on the web;
 - the Help Centre and Service Status links work;
 - request and issue buttons return to `https://requests.camcore.au`.

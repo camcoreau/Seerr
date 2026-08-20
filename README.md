@@ -66,7 +66,7 @@ All Cameron-Media Requests email templates use a common shared layout with:
 - structured light detail panels;
 - cyan primary actions;
 - CamCore Help Centre, Service Status and support contact details;
-- consistent `[CamCore Media] …` subject lines.
+- clear notification subjects without a redundant brand prefix.
 
 Covered messages include request lifecycle updates, media issues, account creation, password reset and test notifications.
 
@@ -75,6 +75,8 @@ The expected sender identity is:
 ```text
 Requests | CamCore Media <help@camcore.au>
 ```
+
+The application remains **Cameron-Media Requests**. `CamCore Media` is used as the sender/brand family rather than as a replacement service name.
 
 See [CamCore Deployment](./docs/camcore-deployment.md) for the SMTP and validation checklist.
 
