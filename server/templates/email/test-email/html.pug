@@ -3,11 +3,12 @@ include ../_partials/camcore.pug
 +camcoreEmail('CAMCORE MEDIA • REQUESTS', event, heading)
   +camcoreGreeting(recipientName, recipientEmail, applicationTitle)
   p(style='margin: 14px 0 0; color: #435562; font-size: 15px; line-height: 24px;')
-    | #{body}
+    | This test confirms that Cameron-Media Requests can send CamCore-branded email notifications to this mailbox.
 
-  +camcorePanel('Email channel')
-    div(style='color: #071827; font-size: 15px; line-height: 22px; font-weight: 750;') Cameron-Media Requests can successfully deliver email notifications to this mailbox.
-    div(style='margin-top: 6px; color: #526572; font-size: 13px; line-height: 20px;')
-      | Expected sender identity: Requests | CamCore Media <help@camcore.au>
+  +camcorePanel('Email delivery')
+    div(style='color: #071827; font-size: 15px; line-height: 22px; font-weight: 750;') Email delivery is working correctly.
+    div(style='margin-top: 6px; color: #526572; font-size: 13px; line-height: 20px;') You can receive request status, availability and account notifications from Cameron-Media Requests.
+    div(style='margin-top: 8px; color: #718391; font-size: 12px; line-height: 18px;')
+      | Sender: Requests | CamCore Media <help@camcore.au>
 
   +camcoreButton(applicationUrl, 'Open Cameron-Media Requests')
