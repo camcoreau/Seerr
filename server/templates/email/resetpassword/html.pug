@@ -3,16 +3,16 @@ include ../_partials/camcore.pug
 +camcoreEmail('CAMCORE MEDIA • REQUESTS', 'PASSWORD RESET', 'Reset your Cameron-Media Requests password')
   +camcoreGreeting(recipientName, recipientEmail, applicationTitle)
   p(style='margin: 14px 0 0; color: #435562; font-size: 15px; line-height: 24px;')
-    | A request was received to change the password for your #{applicationTitle} account.
+    | We received a request to reset the password for your Cameron-Media Requests account. Use the button below to choose a new password.
 
   +camcoreButton(resetPasswordLink, 'Reset password')
 
   +camcorePanel('Link validity')
-    div(style='color: #243843; font-size: 14px; line-height: 22px; font-weight: 700;') This password reset link expires in 24 hours.
-    div(style='margin-top: 6px; color: #526572; font-size: 13px; line-height: 20px;') If the link expires, start a new password reset from Cameron-Media Requests.
+    div(style='color: #243843; font-size: 14px; line-height: 22px; font-weight: 700;') This password reset link is valid for 24 hours.
+    div(style='margin-top: 6px; color: #526572; font-size: 13px; line-height: 20px;') If it expires, request another password reset from Cameron-Media Requests.
 
   table(role='presentation' cellpadding='0' cellspacing='0' border='0' width='100%' style='margin: 26px 0 0;')
     tr
       td(style='padding: 15px 17px; background-color: #f8fafb; border-left: 3px solid #12c4de; color: #435562; font-size: 13px; line-height: 20px;')
-        div(style='color: #10212b; font-weight: 750;') Didn’t request this change?
-        div(style='margin-top: 3px;') You can safely ignore this message. Your current password will remain unchanged.
+        div(style='color: #10212b; font-weight: 750;') Didn’t request a password reset?
+        div(style='margin-top: 3px;') No action is required. Your current password will remain unchanged unless the reset link is used.
