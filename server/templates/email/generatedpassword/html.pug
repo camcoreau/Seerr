@@ -3,19 +3,19 @@ include ../_partials/camcore.pug
 +camcoreEmail('CAMCORE MEDIA • REQUESTS', 'ACCOUNT CREATED', 'Your Cameron-Media Requests account is ready')
   +camcoreGreeting(recipientName, recipientEmail, applicationTitle)
   p(style='margin: 14px 0 0; color: #435562; font-size: 15px; line-height: 24px;')
-    | Your Cameron-Media Requests account has been created. Use the temporary password below to sign in and start requesting movies and series for Cameron-Media.
+    | Your access to Cameron-Media Requests has been set up. Use the temporary password below for your first sign-in.
 
   +camcorePanel('Temporary password')
     div(style='color: #071827; font-family: Consolas, "Courier New", monospace; font-size: 19px; line-height: 27px; font-weight: 750; letter-spacing: 0.5px; word-break: break-all;')
       | #{password}
-    div(style='margin-top: 8px; color: #718391; font-size: 12px; line-height: 18px;') This password is for your first sign-in. Keep it private and change it after signing in if prompted.
+    div(style='margin-top: 8px; color: #718391; font-size: 12px; line-height: 18px;') Use this password for your first sign-in only. Keep it private and change it when prompted.
 
   +camcoreButton(applicationUrl, 'Open Cameron-Media Requests')
 
   table(role='presentation' cellpadding='0' cellspacing='0' border='0' width='100%' style='margin: 26px 0 0;')
     tr
       td(style='padding: 15px 17px; background-color: #f8fafb; border-left: 3px solid #12c4de; color: #435562; font-size: 13px; line-height: 20px;')
-        div(style='color: #10212b; font-weight: 750;') Weren’t expecting this account?
+        div(style='color: #10212b; font-weight: 750;') Wasn’t expecting this account?
         div(style='margin-top: 3px;') Contact CamCore Support and we’ll review the account for you.
         div(style='margin-top: 7px;')
           a(href='https://camcore.au/support.html' style='color: #0d879b; font-weight: 700; text-decoration: none;') Open CamCore Support
