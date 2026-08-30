@@ -1,6 +1,10 @@
+<!-- CAMCORE-REPOSITORY-BRANDING:START -->
 <p align="center">
-  <img src="./public/logo_full.svg" alt="CamCore — Cameron Family Secure Network" width="620">
+  <a href="https://camcore.au">
+    <img src=".github/brand/camcore-repository-banner.svg" alt="CamCore" width="520">
+  </a>
 </p>
+<!-- CAMCORE-REPOSITORY-BRANDING:END -->
 
 <p align="center">
   <strong>Cameron-Media Requests</strong><br>
