@@ -11,6 +11,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        camcore: {
+          coral: '#FF4B2B',
+          'coral-light': '#FF6A47',
+          'coral-accessible': '#C8321A',
+          'deep-core': '#101720',
+        },
+      },
       transitionProperty: {
         'max-height': 'max-height',
         width: 'width',
