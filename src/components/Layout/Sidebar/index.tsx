@@ -136,7 +136,7 @@ const CamCoreLinks: CamCoreLinkProps[] = [
     svgIcon: <HomeIcon className="mr-3 h-5 w-5" />,
   },
   {
-    href: 'https://camcore.au/help-centre.html',
+    href: 'https://camcore.au/help',
     label: 'Help Centre',
     svgIcon: <LifebuoyIcon className="mr-3 h-5 w-5" />,
   },
