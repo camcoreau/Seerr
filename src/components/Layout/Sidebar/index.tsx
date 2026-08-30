@@ -277,7 +277,7 @@ const Sidebar = ({
                       </div>
 
                       <div className="mt-7 border-t border-white/10 pt-5">
-                        <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
+                        <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-[0.18em] text-camcore-coral-light">
                           CamCore
                         </p>
                         <div className="space-y-1.5">
@@ -398,7 +398,7 @@ const Sidebar = ({
                 </div>
 
                 <div className="mt-7 border-t border-white/10 pt-5">
-                  <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/70">
+                  <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-[0.18em] text-camcore-coral-light">
                     CamCore
                   </p>
                   <div className="space-y-1.5">
