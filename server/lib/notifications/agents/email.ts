@@ -132,6 +132,7 @@ const formatNotificationTimestamp = (): string =>
   new Intl.DateTimeFormat('en-AU', {
     dateStyle: 'medium',
     timeStyle: 'short',
+    timeZone: 'Australia/Melbourne',
   }).format(new Date());
 
 class EmailAgent

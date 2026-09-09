@@ -276,7 +276,7 @@ const Login = () => {
               <p className="mt-5 text-center text-xs leading-5 text-gray-400">
                 {intl.formatMessage(messages.needhelp)}{' '}
                 <a
-                  href="https://camcore.au/help"
+                  href="https://camcore.au/help-centre.html"
                   target="_blank"
                   rel="noreferrer"
                   className="font-medium text-cyan-300 underline decoration-cyan-400/40 underline-offset-4 transition hover:text-cyan-200"
