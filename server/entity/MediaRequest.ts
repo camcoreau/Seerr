@@ -14,6 +14,7 @@ import { Permission } from '@server/lib/permissions';
 import { getSettings } from '@server/lib/settings';
 import logger from '@server/logger';
 import { DbAwareColumn, resolveDbType } from '@server/utils/DbColumnHelper';
+import requestLock from '@server/utils/requestLock';
 import { truncate } from 'lodash';
 import {
   AfterInsert,
@@ -48,6 +49,16 @@ export class MediaRequest {
     requestBody: MediaRequestBody,
     user: User,
     options: MediaRequestOptions = {}
+  ): Promise<MediaRequest> {
+    return requestLock.dispatch(requestBody.userId || user.id, () =>
+      MediaRequest.createRequest(requestBody, user, options)
+    );
+  }
+
+  private static async createRequest(
+    requestBody: MediaRequestBody,
+    user: User,
+    options: MediaRequestOptions
   ): Promise<MediaRequest> {
     const tmdb = new TheMovieDb();
     const mediaRepository = getRepository(Media);
@@ -422,7 +433,10 @@ export class MediaRequest {
       let requestedSeasons =
         requestBody.seasons === 'all'
           ? tmdbMediaShow.seasons
-              .filter((season) => season.season_number !== 0)
+              .filter(
+                (season) =>
+                  season.season_number !== 0 && season.episode_count > 0
+              )
               .map((season) => season.season_number)
           : (requestBody.seasons as number[]);
       if (!settings.main.enableSpecialEpisodes) {
